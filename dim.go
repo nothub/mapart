@@ -1,14 +1,14 @@
 package main
 
-func dimById(id byte) string {
+func dimById(id byte) (string, bool) {
 	switch id {
-	case 0b00000000:
-		return "minecraft:overworld"
-	case 0b11111111:
-		return "minecraft:the_nether"
-	case 0b00000001:
-		return "minecraft:the_end"
+	case 0x00: //  0
+		return "minecraft:overworld", true
+	case 0xff: // -1
+		return "minecraft:the_nether", true
+	case 0x01: //  1
+		return "minecraft:the_end", true
 	default:
-		return "minecraft:overworld"
+		return "", false
 	}
 }
