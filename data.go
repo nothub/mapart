@@ -267,8 +267,7 @@ func LoadMap(path string) (m Map, err error) {
 		return m, fmt.Errorf("failed to decompress gzip: %w", err)
 	}
 
-	var b []byte
-	_, err = io.ReadFull(gzr, b)
+	b, err := io.ReadAll(gzr)
 	if err != nil {
 		return m, fmt.Errorf("failed to read data: %w", err)
 	}
