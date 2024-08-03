@@ -95,8 +95,8 @@ type Map2566 struct {
 // add field: UUIDLeast (long)
 type Map2586 struct {
 	Data struct {
-		UUIDMost          int64  `nbt:"UUIDMost"`
-		UUIDLeast         int64  `nbt:"UUIDLeast"`
+		UuidMost          int64  `nbt:"UUIDMost"`
+		UuidLeast         int64  `nbt:"UUIDLeast"`
 		XCenter           int    `nbt:"xCenter"`
 		ZCenter           int    `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
@@ -111,10 +111,10 @@ type Map2586 struct {
 
 type Map struct {
 	Data struct {
-		Width             int    `nbt:"width"`
-		Height            int    `nbt:"height"`
-		UUIDMost          int64  `nbt:"UUIDMost"`
-		UUIDLeast         int64  `nbt:"UUIDLeast"`
+		Width             int    `nbt:"-"`
+		Height            int    `nbt:"-"`
+		UuidMost          int64  `nbt:"UUIDMost"`
+		UuidLeast         int64  `nbt:"UUIDLeast"`
 		XCenter           int    `nbt:"xCenter"`
 		ZCenter           int    `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
@@ -123,6 +123,8 @@ type Map struct {
 		TrackingPosition  byte   `nbt:"trackingPosition"`
 		Locked            byte   `nbt:"locked"`
 		Colors            []byte `nbt:"colors"`
+		Banners           []byte `nbt:"banners,list"`
+		Frames            []byte `nbt:"frames,list"`
 	} `nbt:"data"`
 	Versioned
 }
@@ -131,7 +133,7 @@ type Versioned struct {
 	DataVersion int `nbt:"DataVersion"`
 }
 
-func convert(b []byte) (m Map, err error) {
+func ReadNbt(b []byte) (m Map, err error) {
 
 	var v Versioned
 
@@ -145,8 +147,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1343)
 		m.Data.Width = map1343.Data.Width
 		m.Data.Height = map1343.Data.Height
-		m.Data.UUIDMost = 0  // TODO
-		m.Data.UUIDLeast = 0 // TODO
+		m.Data.UuidMost = 0  // TODO
+		m.Data.UuidLeast = 0 // TODO
 		m.Data.XCenter = map1343.Data.XCenter
 		m.Data.ZCenter = map1343.Data.ZCenter
 		m.Data.Scale = map1343.Data.Scale
@@ -162,8 +164,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1519)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UUIDMost = 0  // TODO
-		m.Data.UUIDLeast = 0 // TODO
+		m.Data.UuidMost = 0  // TODO
+		m.Data.UuidLeast = 0 // TODO
 		m.Data.XCenter = map1519.Data.XCenter
 		m.Data.ZCenter = map1519.Data.ZCenter
 		m.Data.Scale = map1519.Data.Scale
@@ -179,8 +181,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1628)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UUIDMost = 0  // TODO
-		m.Data.UUIDLeast = 0 // TODO
+		m.Data.UuidMost = 0  // TODO
+		m.Data.UuidLeast = 0 // TODO
 		m.Data.XCenter = map1628.Data.XCenter
 		m.Data.ZCenter = map1628.Data.ZCenter
 		m.Data.Scale = map1628.Data.Scale
@@ -196,8 +198,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1952)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UUIDMost = 0  // TODO
-		m.Data.UUIDLeast = 0 // TODO
+		m.Data.UuidMost = 0  // TODO
+		m.Data.UuidLeast = 0 // TODO
 		m.Data.XCenter = map1952.Data.XCenter
 		m.Data.ZCenter = map1952.Data.ZCenter
 		m.Data.Scale = map1952.Data.Scale
@@ -213,8 +215,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2566)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UUIDMost = 0  // TODO
-		m.Data.UUIDLeast = 0 // TODO
+		m.Data.UuidMost = 0  // TODO
+		m.Data.UuidLeast = 0 // TODO
 		m.Data.XCenter = map2566.Data.XCenter
 		m.Data.ZCenter = map2566.Data.ZCenter
 		m.Data.Scale = map2566.Data.Scale
@@ -230,8 +232,8 @@ func convert(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2586)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UUIDMost = map2586.Data.UUIDMost
-		m.Data.UUIDLeast = map2586.Data.UUIDLeast
+		m.Data.UuidMost = map2586.Data.UuidMost
+		m.Data.UuidLeast = map2586.Data.UuidLeast
 		m.Data.XCenter = map2586.Data.XCenter
 		m.Data.ZCenter = map2586.Data.ZCenter
 		m.Data.Scale = map2586.Data.Scale
@@ -272,5 +274,5 @@ func LoadMap(path string) (m Map, err error) {
 		return m, fmt.Errorf("failed to read data: %w", err)
 	}
 
-	return convert(b)
+	return ReadNbt(b)
 }
