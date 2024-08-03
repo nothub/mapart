@@ -2,11 +2,11 @@ package main
 
 func dimById(id byte) string {
 	switch id {
-	case byte(0):
+	case 0b00000000:
 		return "minecraft:overworld"
-	case byte(int8(-1)):
+	case 0b11111111:
 		return "minecraft:the_nether"
-	case byte(1):
+	case 0b00000001:
 		return "minecraft:the_end"
 	default:
 		return "minecraft:overworld"
