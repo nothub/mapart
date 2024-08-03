@@ -7,6 +7,34 @@ import (
 	"os"
 )
 
+// <= 1.12.2
+// "classic" map format
+type Map1343 struct{}
+
+// 1.13
+// add field: banners
+// del field: width
+// del field: height
+type Map1519 struct{}
+
+// 1.13.1
+// change dimension type to int
+// add field: frames
+type Map1628 struct{}
+
+// 1.14
+// add field: locked (byte)
+type Map1952 struct{}
+
+// 1.16
+// change dimension type to string (resource location)
+type MapXXXX struct{}
+
+// 1.16.5
+// add field: UUIDMost (long)
+// add field: UUIDLeast (long)
+type Map2586 struct{}
+
 type Map struct {
 	Data struct {
 		Width  int `nbt:"width"`
@@ -26,22 +54,22 @@ type Map struct {
 
 		// TODO: somehow handle type conflict
 		// Resource location of a dimension.
-		Dimension string `nbt:"dimension,omitempty"`
+		Dimension string `nbt:"dimension"`
 		// Pre-1.16 dimension id:
 		// 0 = The Overworld
 		// -1 = The Nether
 		// 1 = The End
 		// any other value = a static image with no player pin.
-		DimensionOld byte `nbt:"dimension,omitempty"`
+		DimensionOld byte `nbt:"dimension"`
 
 		// How zoomed in the map is (it is in 2scale wide blocks square per pixel, even for 0, where the map is 1:1). Default 3, minimum 0 and maximum 4.
 		Scale byte `nbt:"scale"`
 
-		UuidLeast         int  `nbt:"UUIDLeast,omitempty"`
-		UuidMost          int  `nbt:"UUIDMost,omitempty"`
-		Locked            int  `nbt:"locked,omitempty"`
-		TrackingPosition  byte `nbt:"trackingPosition,omitempty"`
-		UnlimitedTracking byte `nbt:"unlimitedTracking,omitempty"`
+		UuidLeast         int  `nbt:"UUIDLeast"`
+		UuidMost          int  `nbt:"UUIDMost"`
+		Locked            int  `nbt:"locked"`
+		TrackingPosition  byte `nbt:"trackingPosition"`
+		UnlimitedTracking byte `nbt:"unlimitedTracking"`
 
 		// TODO: banners
 		//  List of banner markers added to this map. May be empty.
