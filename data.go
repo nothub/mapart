@@ -9,14 +9,43 @@ import (
 	"os"
 )
 
-// <= 1.12.2
+// >= 1.0 && <= 1.8.9
 // classic map format
-type Map1343 struct {
+type MapClassic struct {
+	Data struct {
+		Width     int    `nbt:"width"`
+		Height    int    `nbt:"height"`
+		XCenter   int32  `nbt:"xCenter"`
+		ZCenter   int32  `nbt:"zCenter"`
+		Scale     byte   `nbt:"scale"`
+		Dimension byte   `nbt:"dimension"`
+		Colors    []byte `nbt:"colors"`
+	} `nbt:"data"`
+}
+
+// >= 1.9 && <= 1.10.2
+// add field: trackingPosition (byte)
+type Map169 struct {
+	Data struct {
+		Width            int    `nbt:"width"`
+		Height           int    `nbt:"height"`
+		XCenter          int32  `nbt:"xCenter"`
+		ZCenter          int32  `nbt:"zCenter"`
+		Scale            byte   `nbt:"scale"`
+		Dimension        byte   `nbt:"dimension"`
+		TrackingPosition byte   `nbt:"trackingPosition"`
+		Colors           []byte `nbt:"colors"`
+	} `nbt:"data"`
+}
+
+// >= 1.11 && <= 1.12.2
+// add field: unlimitedTracking (byte)
+type Map819 struct {
 	Data struct {
 		Width             int    `nbt:"width"`
 		Height            int    `nbt:"height"`
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         byte   `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -25,14 +54,18 @@ type Map1343 struct {
 	} `nbt:"data"`
 }
 
-// 1.13
-// add field: banners (but we ignore this anyways)
+type Versioned struct {
+	DataVersion int `nbt:"DataVersion"`
+}
+
+// >= 1.13 && <= 1.13
+// add field: banners (but we ignore this anyway)
 // del field: width
 // del field: height
 type Map1519 struct {
 	Data struct {
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         byte   `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -42,13 +75,13 @@ type Map1519 struct {
 	Versioned
 }
 
-// 1.13.1
+// >= 1.13.1 && <= 1.13.2
 // change dimension type to int
 // add field: frames (but we ignore this anyways)
 type Map1628 struct {
 	Data struct {
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         int    `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -58,12 +91,12 @@ type Map1628 struct {
 	Versioned
 }
 
-// 1.14
+// >= 1.14 && <= 1.14.4
 // add field: locked (byte)
 type Map1952 struct {
 	Data struct {
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         int    `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -74,12 +107,12 @@ type Map1952 struct {
 	Versioned
 }
 
-// 1.16
+// >= 1.16 && <= 1.16.4
 // change dimension type to string (resource location)
 type Map2566 struct {
 	Data struct {
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         string `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -90,15 +123,15 @@ type Map2566 struct {
 	Versioned
 }
 
-// 1.16.5
+// >= 1.16.5
 // add field: UUIDMost (long)
 // add field: UUIDLeast (long)
 type Map2586 struct {
 	Data struct {
 		UuidMost          int64  `nbt:"UUIDMost"`
 		UuidLeast         int64  `nbt:"UUIDLeast"`
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         string `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -115,8 +148,8 @@ type Map struct {
 		Height            int    `nbt:"-"`
 		UuidMost          int64  `nbt:"UUIDMost"`
 		UuidLeast         int64  `nbt:"UUIDLeast"`
-		XCenter           int    `nbt:"xCenter"`
-		ZCenter           int    `nbt:"zCenter"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
 		Scale             byte   `nbt:"scale"`
 		Dimension         string `nbt:"dimension"`
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
@@ -129,10 +162,6 @@ type Map struct {
 	Versioned
 }
 
-type Versioned struct {
-	DataVersion int `nbt:"DataVersion"`
-}
-
 func ReadNbt(b []byte) (m Map, err error) {
 
 	var v Versioned
@@ -143,7 +172,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 	}
 
 	if v.DataVersion <= 1343 {
-		var map1343 Map1343
+		var map1343 Map819
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1343)
 		m.Data.Width = map1343.Data.Width
 		m.Data.Height = map1343.Data.Height
