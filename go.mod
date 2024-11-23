@@ -5,7 +5,6 @@ go 1.22
 require (
 	github.com/Tnze/go-mc v1.20.2
 	github.com/fogleman/gg v1.3.0
-	github.com/nothub/semver v0.10.0
 )
 
 require (
