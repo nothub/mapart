@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-//go:generate curl -fsSLO https://github.com/nothub/MapColors/releases/latest/download/colors.csv
+//go:generate curl -fsSLO https://github.com/nothub/MapColors/releases/download/1733671934/colors.csv
 
 //go:embed colors.csv
 var colorData []byte
