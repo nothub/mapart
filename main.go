@@ -25,7 +25,7 @@ func main() {
 
 	for _, s := range []string{"help", "-h", "-help", "--help"} {
 		if slices.Contains(os.Args, s) {
-			log.Print(usage)
+			fmt.Print(usage)
 			os.Exit(0)
 		}
 	}
