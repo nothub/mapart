@@ -4,6 +4,8 @@ A tool to fumble around with Minecraft [map files](https://minecraft.fandom.com/
 
 ---
 
+For usage help see: [USAGE.txt](USAGE.txt)
+
 ## Map Format Infos
 
 | Data Version | MC Versions     | Changes                                                                                       |
