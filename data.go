@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+const LatestDataVersion = 2586
+
 // >= 1.0 && <= 1.8.9
 // classic map format
 type MapClassic struct {
@@ -186,7 +188,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1343.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1343.Data.Colors
-		m.DataVersion = 1343
+		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1519 {
 		var map1519 Map1519
@@ -203,7 +205,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1519.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1519.Data.Colors
-		m.DataVersion = map1519.DataVersion
+		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1628 {
 		var map1628 Map1628
@@ -220,7 +222,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1628.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1628.Data.Colors
-		m.DataVersion = map1628.DataVersion
+		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1952 {
 		var map1952 Map1952
@@ -237,7 +239,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1952.Data.TrackingPosition
 		m.Data.Locked = map1952.Data.Locked
 		m.Data.Colors = map1952.Data.Colors
-		m.DataVersion = map1952.DataVersion
+		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 2566 {
 		var map2566 Map2566
@@ -254,7 +256,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map2566.Data.TrackingPosition
 		m.Data.Locked = map2566.Data.Locked
 		m.Data.Colors = map2566.Data.Colors
-		m.DataVersion = map2566.DataVersion
+		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 2586 {
 		var map2586 Map2586
@@ -271,7 +273,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map2586.Data.TrackingPosition
 		m.Data.Locked = map2586.Data.Locked
 		m.Data.Colors = map2586.Data.Colors
-		m.DataVersion = map2586.DataVersion
+		m.DataVersion = LatestDataVersion
 
 	} else {
 		err = fmt.Errorf("unsupported data version %v", v.DataVersion)
