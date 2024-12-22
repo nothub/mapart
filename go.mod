@@ -1,6 +1,6 @@
 module github.com/nothub/mapart
 
-go 1.22
+go 1.23.4
 
 require (
 	github.com/Tnze/go-mc v1.20.2
