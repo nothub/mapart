@@ -53,8 +53,8 @@ func main() {
 	switch os.Args[1] {
 	case "png":
 		pngCmd(inputs)
-	case "fix":
-		fixCmd(inputs)
+	case "update":
+		updateCmd(inputs)
 	default:
 		log.Print(usage)
 		os.Exit(2)

@@ -9,16 +9,18 @@ import (
 	"os"
 )
 
-func fixCmd(inputs []string) {
+func updateCmd(inputs []string) {
 	for _, path := range inputs {
-		err := fix(path)
+		err := update(path)
 		if err != nil {
 			log.Println(err.Error())
 		}
 	}
 }
 
-func fix(path string) error {
+func update(path string) error {
+
+	log.Printf("updating %s\n", path)
 
 	m, err := LoadMap(path)
 	if err != nil {
