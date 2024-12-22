@@ -23,6 +23,7 @@ func main() {
 		os.Exit(2)
 	}
 
+	// TODO: do this in a sane way
 	for _, s := range []string{"help", "-h", "-help", "--help"} {
 		if slices.Contains(os.Args, s) {
 			fmt.Print(usage)
