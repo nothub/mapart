@@ -2,14 +2,14 @@ mapart - A tool to fumble around with Minecraft map files
 
 Commands:
 
-    png - convert map files to image files
-    Usage: mapart png (<file> | <dir>)...
+    png (<file> | <dir>)...
+        convert map files to image files
 
-    fix - patch up old map files
-    Usage: mapart fix (<file> | <dir>)...
+    fix (<file> | <dir>)...
+        patch up old map files
 
-    colors - print colors csv and exit
-    Usage: mapart colors
+    colors
+        print colors csv and exit
 
-    help - print help message and exit
-    Usage: mapart help
+    help
+        print help message and exit
