@@ -7,9 +7,6 @@
   ],
   "shell": {
     "scripts": {
-      "generate": [
-        "go generate ."
-      ],
       "test": [
         "./scripts/test.sh"
       ],

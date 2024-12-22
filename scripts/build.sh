@@ -33,6 +33,8 @@ set -x
 rm    -rf "dist"
 mkdir -p  "dist"
 
+go generate .
+
 build linux amd64
 build linux arm64
 build darwin amd64
