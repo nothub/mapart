@@ -55,7 +55,7 @@ type Map819 struct {
 }
 
 type Versioned struct {
-	DataVersion int `nbt:"DataVersion"`
+	DataVersion int32 `nbt:"DataVersion"`
 }
 
 // >= 1.13 && <= 1.13
