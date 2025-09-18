@@ -417,6 +417,10 @@ func ReadNbt(b []byte) (m Map, err error) {
 		err = fmt.Errorf("unsupported data version %v", v.DataVersion)
 	}
 
+	if len(m.Data.Colors) == 0 {
+		err = fmt.Errorf("no colors, probably not a map")
+	}
+
 	if err != nil {
 		return m, fmt.Errorf("failed to decode nbt data (data version %v): %w", v.DataVersion, err)
 	}
