@@ -12,17 +12,35 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v6
+      - name: 'Install Nix'
+        uses: cachix/install-nix-action@v31
         with:
-          go-version-file: 'go.mod'
-          check-latest: true
-          cache: true
+          nix_path: "nixpkgs=channel:nixos-25.05"
 
-      - run: |
-          ./scripts/build.sh
+      - name: 'Activate Nix store cache'
+        uses: actions/cache@v4.2.4
+        id: nix-cache
+        with:
+          path: "/tmp/nixcache"
+          key: "nix-store-${{ hashFiles(format('{0}/build.sh', github.workspace)) }}"
 
-      - uses: softprops/action-gh-release@v2
+      - name: 'Import Nix store cache'
+        if: "steps.nix-cache.outputs.cache-hit == 'true'"
+        run: nix-store --import < /tmp/nixcache
+
+      - name: 'Run build'
+        run: |
+          devbox run --pure build
+
+      - name: 'Publish artifacts'
+        uses: softprops/action-gh-release@v2
         with:
           name: '${{ github.ref_name }}'
           body: 'Release generated at commit: ${{ github.sha }}'
           files: 'dist/*'
+
+      - name: 'Export Nix store cache'
+        if: >
+          ( github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' )
+          && steps.nix-cache.outputs.cache-hit != 'true'
+        run: nix-store --export $(find /nix/store -maxdepth 1 -name '*-*') > /tmp/nixcache

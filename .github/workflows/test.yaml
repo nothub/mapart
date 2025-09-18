@@ -10,11 +10,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v6
+      - name: 'Install Nix'
+        uses: cachix/install-nix-action@v31
         with:
-          go-version-file: 'go.mod'
-          check-latest: true
-          cache: true
+          nix_path: "nixpkgs=channel:nixos-25.05"
 
-      - run: |
-          ./scripts/test.sh
+      - name: 'Activate Nix store cache'
+        uses: actions/cache@v4.2.4
+        id: nix-cache
+        with:
+          path: "/tmp/nixcache"
+          key: "nix-store-${{ hashFiles(format('{0}/build.sh', github.workspace)) }}"
+
+      - name: 'Import Nix store cache'
+        if: "steps.nix-cache.outputs.cache-hit == 'true'"
+        run: nix-store --import < /tmp/nixcache
+
+      - name: 'Run tests'
+        run: |
+          devbox run --pure test
+
+      - name: 'Export Nix store cache'
+        if: >
+          ( github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' )
+          && steps.nix-cache.outputs.cache-hit != 'true'
+        run: nix-store --export $(find /nix/store -maxdepth 1 -name '*-*') > /tmp/nixcache

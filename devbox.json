@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.12.0/.schema/devbox.schema.json",
   "packages": [
-    "go@1.23",
-    "curl@8",
-    "upx@4"
+    "go@1.24.5",
+    "curl@8.14.1",
+    "upx@5.0.2"
   ],
   "shell": {
     "scripts": {
