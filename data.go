@@ -447,7 +447,7 @@ func LoadMap(path string) (m Map, err error) {
 		return m, fmt.Errorf("failed to read data from %s: %w", path, err)
 	}
 
-    m, err = ReadNbt(b)
+	m, err = ReadNbt(b)
 	if err != nil {
 		return m, fmt.Errorf("failed to read nbt from %s: %w", path, err)
 	}
