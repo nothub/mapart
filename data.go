@@ -9,7 +9,7 @@ import (
 	"os"
 )
 
-const LatestDataVersion = 2586
+const LatestDataVersion = 4440
 
 // >= 1.0 && <= 1.8.9
 // classic map format
@@ -243,7 +243,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		return m, fmt.Errorf("failed to decode nbt data: %w", err)
 	}
 
-	if v.DataVersion <= 1343 {
+	if v.DataVersion <= 1343 /* 1.12.2 */ {
 		var map1343 Map819
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1343)
 		m.Data.Width = map1343.Data.Width
@@ -260,7 +260,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map1343.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 1519 {
+	} else if v.DataVersion <= 1519 /* 1.13 */ {
 		var map1519 Map1519
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1519)
 		m.Data.Width = 128
@@ -277,7 +277,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map1519.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 1628 {
+	} else if v.DataVersion <= 1628 /* 1.13.1 */ {
 		var map1628 Map1628
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1628)
 		m.Data.Width = 128
@@ -294,7 +294,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map1628.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 1952 {
+	} else if v.DataVersion <= 1952 /* 1.14 */ {
 		var map1952 Map1952
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1952)
 		m.Data.Width = 128
@@ -311,7 +311,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map1952.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 2566 {
+	} else if v.DataVersion <= 2566 /* 1.16 */ {
 		var map2566 Map2566
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2566)
 		m.Data.Width = 128
@@ -328,7 +328,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map2566.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 2586 {
+	} else if v.DataVersion <= 2586 /* 1.16.5 */ {
 		var map2586 Map2586
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2586)
 		m.Data.Width = 128
@@ -345,7 +345,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map2586.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 3463 {
+	} else if v.DataVersion <= 3463 /* 1.20 */ {
 		var map3463 Map3463
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3463)
 		m.Data.Width = 128
@@ -362,7 +362,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map3463.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 3839 {
+	} else if v.DataVersion <= 3839 /* 1.20.6 */ {
 		var map3839 Map3839
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3839)
 		m.Data.Width = 128
@@ -379,7 +379,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map3839.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 3955 {
+	} else if v.DataVersion <= 3955 /* 1.21.1 */ {
 		var map3955 Map3955
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3955)
 		m.Data.Width = 128
@@ -414,7 +414,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.DataVersion = LatestDataVersion
 
 	} else {
-		err = fmt.Errorf("unsupported data version %v", v.DataVersion)
+		err = fmt.Errorf("unsupported data version %v\nplease report to https://github.com/nothub/mapart", v.DataVersion)
 	}
 
 	if len(m.Data.Colors) == 0 {
