@@ -432,20 +432,25 @@ func LoadMap(path string) (m Map, err error) {
 
 	fr, err := os.Open(path)
 	if err != nil {
-		return m, fmt.Errorf("failed to open file: %w", err)
+		return m, fmt.Errorf("failed to open file %s: %w", path, err)
 	}
 	defer fr.Close()
 
 	// map files are always gzipped
 	gzr, err := gzip.NewReader(fr)
 	if err != nil {
-		return m, fmt.Errorf("failed to decompress gzip: %w", err)
+		return m, fmt.Errorf("failed to decompress gzip from %s: %w", path, err)
 	}
 
 	b, err := io.ReadAll(gzr)
 	if err != nil {
-		return m, fmt.Errorf("failed to read data: %w", err)
+		return m, fmt.Errorf("failed to read data from %s: %w", path, err)
 	}
 
-	return ReadNbt(b)
+    m, err = ReadNbt(b)
+	if err != nil {
+		return m, fmt.Errorf("failed to read nbt from %s: %w", path, err)
+	}
+
+	return m, nil
 }
