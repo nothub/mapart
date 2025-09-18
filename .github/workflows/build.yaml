@@ -1,0 +1,28 @@
+name: '🧑‍🏭'
+on: [ push ]
+permissions:
+  contents: write
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/v') == true
+    runs-on: ubuntu-24.04
+    steps:
+
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: 'go.mod'
+          check-latest: true
+          cache: true
+
+      - run: |
+          ./scripts/build.sh
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          name: '${{ github.ref_name }}'
+          body: 'Release generated at commit: ${{ github.sha }}'
+          files: 'dist/*'
