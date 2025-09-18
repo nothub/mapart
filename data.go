@@ -93,7 +93,7 @@ type Map1628 struct {
 	Versioned
 }
 
-// >= 1.14 && <= 1.14.4
+// >= 1.14 && <= 1.15.2
 // add field: locked (byte)
 type Map1952 struct {
 	Data struct {
@@ -258,7 +258,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1343.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1343.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1519 /* 1.13 */ {
 		var map1519 Map1519
@@ -275,7 +274,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1519.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1519.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1628 /* 1.13.1 */ {
 		var map1628 Map1628
@@ -292,7 +290,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1628.Data.TrackingPosition
 		m.Data.Locked = 0
 		m.Data.Colors = map1628.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 1952 /* 1.14 */ {
 		var map1952 Map1952
@@ -309,7 +306,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map1952.Data.TrackingPosition
 		m.Data.Locked = map1952.Data.Locked
 		m.Data.Colors = map1952.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 2566 /* 1.16 */ {
 		var map2566 Map2566
@@ -326,7 +322,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map2566.Data.TrackingPosition
 		m.Data.Locked = map2566.Data.Locked
 		m.Data.Colors = map2566.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 2586 /* 1.16.5 */ {
 		var map2586 Map2586
@@ -343,7 +338,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map2586.Data.TrackingPosition
 		m.Data.Locked = map2586.Data.Locked
 		m.Data.Colors = map2586.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 3463 /* 1.20 */ {
 		var map3463 Map3463
@@ -360,7 +354,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map3463.Data.TrackingPosition
 		m.Data.Locked = map3463.Data.Locked
 		m.Data.Colors = map3463.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 3839 /* 1.20.6 */ {
 		var map3839 Map3839
@@ -377,7 +370,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map3839.Data.TrackingPosition
 		m.Data.Locked = map3839.Data.Locked
 		m.Data.Colors = map3839.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 3955 /* 1.21.1 */ {
 		var map3955 Map3955
@@ -394,7 +386,6 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = map3955.Data.TrackingPosition
 		m.Data.Locked = map3955.Data.Locked
 		m.Data.Colors = map3955.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else if v.DataVersion <= 4440 /* 1.21.8 */ {
 		var map4325 Map4325
@@ -411,19 +402,20 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.TrackingPosition = 0
 		m.Data.Locked = 0
 		m.Data.Colors = map4325.Data.Colors
-		m.DataVersion = LatestDataVersion
 
 	} else {
 		err = fmt.Errorf("unsupported data version %v\nplease report to https://github.com/nothub/mapart", v.DataVersion)
 	}
 
-	if len(m.Data.Colors) == 0 {
-		err = fmt.Errorf("no colors, probably not a map")
-	}
-
 	if err != nil {
 		return m, fmt.Errorf("failed to decode nbt data (data version %v): %w", v.DataVersion, err)
 	}
+
+	if len(m.Data.Colors) == 0 {
+		return m, fmt.Errorf("no colors, probably not a map")
+	}
+
+	m.DataVersion = LatestDataVersion
 
 	return m, nil
 }
