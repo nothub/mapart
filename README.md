@@ -4,6 +4,8 @@ A tool to fumble around with Minecraft [map files](https://minecraft.wiki/w/Map_
 
 ---
 
+Latest supported version: `1.21.8` / `4440`
+
 For usage help see: [USAGE.txt](USAGE.txt)
 
 ## Map Format Infos
