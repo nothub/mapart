@@ -243,7 +243,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		return m, fmt.Errorf("failed to decode nbt data: %w", err)
 	}
 
-	if v.DataVersion <= 1343 /* 1.12.2 */ {
+	if v.DataVersion <= 1343 /* >= 0 && <= 1.12.2 */ {
 		var map1343 Map819
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1343)
 		m.Data.Width = map1343.Data.Width
@@ -259,7 +259,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = 0
 		m.Data.Colors = map1343.Data.Colors
 
-	} else if v.DataVersion <= 1519 /* 1.13 */ {
+	} else if v.DataVersion <= 1519 /* > 1.12.2 && <= 1.13 */ {
 		var map1519 Map1519
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1519)
 		m.Data.Width = 128
@@ -275,7 +275,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = 0
 		m.Data.Colors = map1519.Data.Colors
 
-	} else if v.DataVersion <= 1628 /* 1.13.1 */ {
+	} else if v.DataVersion <= 1631 /* > 1.13 && <= 1.13.2 */ {
 		var map1628 Map1628
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1628)
 		m.Data.Width = 128
@@ -291,7 +291,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = 0
 		m.Data.Colors = map1628.Data.Colors
 
-	} else if v.DataVersion <= 1952 /* 1.14 */ {
+	} else if v.DataVersion <= 2230 /* > 1.13.2 && <= 1.15.2 */ {
 		var map1952 Map1952
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1952)
 		m.Data.Width = 128
@@ -307,7 +307,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map1952.Data.Locked
 		m.Data.Colors = map1952.Data.Colors
 
-	} else if v.DataVersion <= 2566 /* 1.16 */ {
+	} else if v.DataVersion <= 2584 /* > 1.15.2 && <= 1.16.4 */ {
 		var map2566 Map2566
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2566)
 		m.Data.Width = 128
@@ -323,7 +323,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map2566.Data.Locked
 		m.Data.Colors = map2566.Data.Colors
 
-	} else if v.DataVersion <= 2586 /* 1.16.5 */ {
+	} else if v.DataVersion <= 3337 /* > 1.16.4 && <= 1.19.4 */ {
 		var map2586 Map2586
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2586)
 		m.Data.Width = 128
@@ -339,7 +339,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map2586.Data.Locked
 		m.Data.Colors = map2586.Data.Colors
 
-	} else if v.DataVersion <= 3463 /* 1.20 */ {
+	} else if v.DataVersion <= 3837 /* > 1.19.4 && <= 1.20.5 */ {
 		var map3463 Map3463
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3463)
 		m.Data.Width = 128
@@ -355,7 +355,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map3463.Data.Locked
 		m.Data.Colors = map3463.Data.Colors
 
-	} else if v.DataVersion <= 3839 /* 1.20.6 */ {
+	} else if v.DataVersion <= 3953 /* > 1.20.5 && <= 1.21 */ {
 		var map3839 Map3839
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3839)
 		m.Data.Width = 128
@@ -371,7 +371,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map3839.Data.Locked
 		m.Data.Colors = map3839.Data.Colors
 
-	} else if v.DataVersion <= 3955 /* 1.21.1 */ {
+	} else if v.DataVersion <= 4189 /* > 1.21 && <= 1.21.4 */ {
 		var map3955 Map3955
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3955)
 		m.Data.Width = 128
@@ -387,7 +387,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map3955.Data.Locked
 		m.Data.Colors = map3955.Data.Colors
 
-	} else if v.DataVersion <= 4440 /* 1.21.8 */ {
+	} else if v.DataVersion <= 4440 /* > 1.21.4 && <= 1.21.8 */ {
 		var map4325 Map4325
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map4325)
 		m.Data.Width = 128
