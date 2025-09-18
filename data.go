@@ -125,7 +125,7 @@ type Map2566 struct {
 	Versioned
 }
 
-// >= 1.16.5
+// 1.16.5 - 1.19.4
 // add field: UUIDMost (long)
 // add field: UUIDLeast (long)
 type Map2586 struct {
@@ -139,6 +139,76 @@ type Map2586 struct {
 		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
 		TrackingPosition  byte   `nbt:"trackingPosition"`
 		Locked            byte   `nbt:"locked"`
+		Colors            []byte `nbt:"colors"`
+	} `nbt:"data"`
+	Versioned
+}
+
+// 1.20 - 1.20.5
+// remove field: UUIDMost (long)
+// remove field: UUIDLeast (long)
+type Map3463 struct {
+	Data struct {
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
+		Scale             byte   `nbt:"scale"`
+		Dimension         string `nbt:"dimension"`
+		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
+		TrackingPosition  byte   `nbt:"trackingPosition"`
+		Locked            byte   `nbt:"locked"`
+		Colors            []byte `nbt:"colors"`
+	} `nbt:"data"`
+	Versioned
+}
+
+// 1.20.6 - 1.21
+// add field: UUIDMost (long)
+// add field: UUIDLeast (long)
+type Map3839 struct {
+	Data struct {
+		UuidMost          int64  `nbt:"UUIDMost"`
+		UuidLeast         int64  `nbt:"UUIDLeast"`
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
+		Scale             byte   `nbt:"scale"`
+		Dimension         string `nbt:"dimension"`
+		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
+		TrackingPosition  byte   `nbt:"trackingPosition"`
+		Locked            byte   `nbt:"locked"`
+		Colors            []byte `nbt:"colors"`
+	} `nbt:"data"`
+	Versioned
+}
+
+// 1.21.1 - 1.21.4
+// remove field: UUIDMost (long)
+// remove field: UUIDLeast (long)
+type Map3955 struct {
+	Data struct {
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
+		Scale             byte   `nbt:"scale"`
+		Dimension         string `nbt:"dimension"`
+		UnlimitedTracking byte   `nbt:"unlimitedTracking"`
+		TrackingPosition  byte   `nbt:"trackingPosition"`
+		Locked            byte   `nbt:"locked"`
+		Colors            []byte `nbt:"colors"`
+	} `nbt:"data"`
+	Versioned
+}
+
+// >= 1.21.5
+// remove field: locked (byte)
+// remove field: scale (byte)
+// remove field: trackingPosition (byte)
+// remove field: unlimitedTracking (byte)
+// remove field: banners (array)
+// remove field: frames (array)
+type Map4325 struct {
+	Data struct {
+		XCenter           int32  `nbt:"xCenter"`
+		ZCenter           int32  `nbt:"zCenter"`
+		Dimension         string `nbt:"dimension"`
 		Colors            []byte `nbt:"colors"`
 	} `nbt:"data"`
 	Versioned
@@ -178,8 +248,8 @@ func ReadNbt(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1343)
 		m.Data.Width = map1343.Data.Width
 		m.Data.Height = map1343.Data.Height
-		m.Data.UuidMost = 0  // TODO
-		m.Data.UuidLeast = 0 // TODO
+		m.Data.UuidMost = 0
+		m.Data.UuidLeast = 0
 		m.Data.XCenter = map1343.Data.XCenter
 		m.Data.ZCenter = map1343.Data.ZCenter
 		m.Data.Scale = map1343.Data.Scale
@@ -195,8 +265,8 @@ func ReadNbt(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1519)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UuidMost = 0  // TODO
-		m.Data.UuidLeast = 0 // TODO
+		m.Data.UuidMost = 0
+		m.Data.UuidLeast = 0
 		m.Data.XCenter = map1519.Data.XCenter
 		m.Data.ZCenter = map1519.Data.ZCenter
 		m.Data.Scale = map1519.Data.Scale
@@ -212,8 +282,8 @@ func ReadNbt(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1628)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UuidMost = 0  // TODO
-		m.Data.UuidLeast = 0 // TODO
+		m.Data.UuidMost = 0
+		m.Data.UuidLeast = 0
 		m.Data.XCenter = map1628.Data.XCenter
 		m.Data.ZCenter = map1628.Data.ZCenter
 		m.Data.Scale = map1628.Data.Scale
@@ -229,8 +299,8 @@ func ReadNbt(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map1952)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UuidMost = 0  // TODO
-		m.Data.UuidLeast = 0 // TODO
+		m.Data.UuidMost = 0
+		m.Data.UuidLeast = 0
 		m.Data.XCenter = map1952.Data.XCenter
 		m.Data.ZCenter = map1952.Data.ZCenter
 		m.Data.Scale = map1952.Data.Scale
@@ -246,8 +316,8 @@ func ReadNbt(b []byte) (m Map, err error) {
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map2566)
 		m.Data.Width = 128
 		m.Data.Height = 128
-		m.Data.UuidMost = 0  // TODO
-		m.Data.UuidLeast = 0 // TODO
+		m.Data.UuidMost = 0
+		m.Data.UuidLeast = 0
 		m.Data.XCenter = map2566.Data.XCenter
 		m.Data.ZCenter = map2566.Data.ZCenter
 		m.Data.Scale = map2566.Data.Scale
@@ -274,6 +344,74 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Locked = map2586.Data.Locked
 		m.Data.Colors = map2586.Data.Colors
 		m.DataVersion = LatestDataVersion
+
+    } else if v.DataVersion <= 3463 {
+    		var map3463 Map3463
+    		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3463)
+    		m.Data.Width = 128
+    		m.Data.Height = 128
+		    m.Data.UuidMost = 0
+		    m.Data.UuidLeast = 0
+    		m.Data.XCenter = map3463.Data.XCenter
+    		m.Data.ZCenter = map3463.Data.ZCenter
+    		m.Data.Scale = map3463.Data.Scale
+    		m.Data.Dimension = map3463.Data.Dimension
+    		m.Data.UnlimitedTracking = map3463.Data.UnlimitedTracking
+    		m.Data.TrackingPosition = map3463.Data.TrackingPosition
+    		m.Data.Locked = map3463.Data.Locked
+    		m.Data.Colors = map3463.Data.Colors
+    		m.DataVersion = LatestDataVersion
+
+    } else if v.DataVersion <= 3839 {
+    		var map3839 Map3839
+    		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3839)
+    		m.Data.Width = 128
+    		m.Data.Height = 128
+    		m.Data.UuidMost = map3839.Data.UuidMost
+    		m.Data.UuidLeast = map3839.Data.UuidLeast
+    		m.Data.XCenter = map3839.Data.XCenter
+    		m.Data.ZCenter = map3839.Data.ZCenter
+    		m.Data.Scale = map3839.Data.Scale
+    		m.Data.Dimension = map3839.Data.Dimension
+    		m.Data.UnlimitedTracking = map3839.Data.UnlimitedTracking
+    		m.Data.TrackingPosition = map3839.Data.TrackingPosition
+    		m.Data.Locked = map3839.Data.Locked
+    		m.Data.Colors = map3839.Data.Colors
+    		m.DataVersion = LatestDataVersion
+
+    } else if v.DataVersion <= 3955 {
+    		var map3955 Map3955
+    		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map3955)
+    		m.Data.Width = 128
+    		m.Data.Height = 128
+		    m.Data.UuidMost = 0
+		    m.Data.UuidLeast = 0
+    		m.Data.XCenter = map3955.Data.XCenter
+    		m.Data.ZCenter = map3955.Data.ZCenter
+    		m.Data.Scale = map3955.Data.Scale
+    		m.Data.Dimension = map3955.Data.Dimension
+    		m.Data.UnlimitedTracking = map3955.Data.UnlimitedTracking
+    		m.Data.TrackingPosition = map3955.Data.TrackingPosition
+    		m.Data.Locked = map3955.Data.Locked
+    		m.Data.Colors = map3955.Data.Colors
+    		m.DataVersion = LatestDataVersion
+
+    } else if v.DataVersion <= 4325 {
+    		var map4325 Map4325
+    		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map4325)
+    		m.Data.Width = 128
+    		m.Data.Height = 128
+    		m.Data.UuidMost = 0
+    		m.Data.UuidLeast = 0
+    		m.Data.XCenter = map4325.Data.XCenter
+    		m.Data.ZCenter = map4325.Data.ZCenter
+    		m.Data.Scale = 0
+    		m.Data.Dimension = map4325.Data.Dimension
+    		m.Data.UnlimitedTracking = 0
+    		m.Data.TrackingPosition = 0
+    		m.Data.Locked = 0
+    		m.Data.Colors = map4325.Data.Colors
+    		m.DataVersion = LatestDataVersion
 
 	} else {
 		err = fmt.Errorf("unsupported data version %v", v.DataVersion)
