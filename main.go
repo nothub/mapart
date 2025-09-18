@@ -57,6 +57,8 @@ func main() {
 		pngCmd(inputs)
 	case "update":
 		updateCmd(inputs)
+	case "empty":
+		emptyCmd(inputs)
 	default:
 		log.Print(usage)
 		os.Exit(2)

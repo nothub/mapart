@@ -8,6 +8,9 @@ Commands:
     update (<file> | <dir>)...
         patch up old map files
 
+    empty (<file> | <dir>)...
+        find empty map files
+
     colors
         print colors csv and exit
 
