@@ -4,10 +4,19 @@ import (
 	"fmt"
 	"log"
 	"path/filepath"
+	"regexp"
 )
 
 func emptyCmd(inputs []string) {
+
+	r, _ := regexp.Compile("map_[0-9]+\\.dat")
+
 	for _, path := range inputs {
+
+		if !r.MatchString(filepath.Base(path)) {
+			log.Println("skipping (not a map): " + path)
+			continue
+		}
 
 		m, err := LoadMap(path)
 		if err != nil {
@@ -23,7 +32,10 @@ func emptyCmd(inputs []string) {
 			}
 		}
 		if isEmpty {
-			fmt.Println(filepath.Abs(path))
+			abs, _ := filepath.Abs(path)
+			fmt.Println(abs)
+		} else {
+			log.Println("skipping (not empty): " + path)
 		}
 
 	}
