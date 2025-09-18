@@ -36,7 +36,8 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 
-	if os.Args[1] == "colors" {
+	switch os.Args[1] {
+	case "colors":
 		fmt.Print(string(colorData))
 		os.Exit(0)
 	}
