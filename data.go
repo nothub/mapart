@@ -396,7 +396,7 @@ func ReadNbt(b []byte) (m Map, err error) {
 		m.Data.Colors = map3955.Data.Colors
 		m.DataVersion = LatestDataVersion
 
-	} else if v.DataVersion <= 4325 {
+	} else if v.DataVersion <= 4440 /* 1.21.8 */ {
 		var map4325 Map4325
 		_, err = nbt.NewDecoder(bytes.NewReader(b)).Decode(&map4325)
 		m.Data.Width = 128
