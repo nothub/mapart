@@ -5,7 +5,7 @@ cd "$(dirname "$(realpath "$0")")/.."
 
 build() (
 
-    file="dist/mcmap_${1}_${2}"
+    file="dist/mapart_${1}_${2}"
     if test "$1" = "windows"; then
         file="${file}.exe"
     fi
