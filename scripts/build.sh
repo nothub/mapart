@@ -30,13 +30,19 @@ build() (
 
 set -x
 
-rm    -rf "dist"
-mkdir -p  "dist"
+rm -rf "dist"
+mkdir -p "dist"
 
 go generate .
 
-build linux amd64
-build linux arm64
-build darwin amd64
-build darwin arm64
-build windows amd64
+set +u
+
+if test -z "$1"; then
+    build linux amd64
+    build linux arm64
+    build darwin amd64
+    build darwin arm64
+    build windows amd64
+else
+    build "$1" "${2:-"amd64"}"
+fi
