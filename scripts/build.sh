@@ -17,7 +17,7 @@ build() (
         .
 
     # compress with upx
-    # ( except for mac because upx mac support requires a feature flag )
+    # ( except for mac because https://github.com/upx/upx/issues/612 )
     if test "$1" != "darwin"; then
         upx --best --lzma \
             --no-color \
