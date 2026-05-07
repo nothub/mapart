@@ -1,6 +1,6 @@
 module github.com/nothub/mapart
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/Tnze/go-mc v1.20.2
@@ -9,5 +9,5 @@ require (
 
 require (
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
-	golang.org/x/image v0.19.0 // indirect
+	golang.org/x/image v0.38.0 // indirect
 )
